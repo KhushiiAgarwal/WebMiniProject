@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Number Game</title>
+  <h1>List of Numbers</h1>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px;
+    }
+    
+    .dropdown-container {
+      padding: 10px;
+    }
+    
+    .search-container {
+      display: none;
+      padding: 10px;
+      position: absolute;
+    }
+    
+    .scrollable-list {
+      overflow-y: auto;
+      padding: 5px;
+    }
+  </style>
+  <script>
+    var numbers = [];
+    
+    function addNumber() {
+      var numberInput = document.getElementById("numberInput");
+      var listContainer = document.getElementById("listContainer");
+      var listItem = document.createElement("div");
+      listItem.textContent = numberInput.value;
+      listContainer.appendChild(listItem);
+      numbers.push(numberInput.value);
+      numberInput.value = "";
+    }
+
+    function displaySortedNumbers() {
+      var sortedNumbers = numbers.slice().sort(function(a, b) {
+        return a - b;
+      });
+      var sortedList = document.getElementById("sortedList");
+      sortedList.innerHTML = sortedNumbers.join(", ");
+    }
+
+    function clearNumbers() {
+      var listContainer = document.getElementById("listContainer");
+      listContainer.innerHTML = "";
+      numbers = [];
+      var sortedList = document.getElementById("sortedList");
+      sortedList.innerHTML = "";
+    }
+
+    function showSearch() {
+      var searchContainer = document.getElementById("searchContainer");
+      searchContainer.style.display = "block";
+    }
+
+    function searchNumber() {
+      var searchInput = document.getElementById("searchInput");
+      var index = numbers.indexOf(searchInput.value);
+      var searchResult = document.getElementById("searchResult");
+      searchResult.innerHTML = index !== -1 ? "Index: " + index : "Index: 0";
+    }
+  </script>
+</head>
+<body bgcolor="ECFDFD">
+  <div class="dropdown-container">
+    <label for="numberInput">Enter Number:</label>
+    <input type="text" id="numberInput">
+    <button onclick="addNumber()">Add</button>
+  </div>
+  <div class="dropdown-container">
+    <div id="listContainer" class="scrollable-list"></div>
+  </div>
+  <div class="dropdown-container">
+    <button onclick="displaySortedNumbers()">Sort List</button>
+    <button onclick="clearNumbers()">Clear</button>
+    <button onclick="showSearch()">Search</button>
+  </div>
+  <div id="searchContainer" class="search-container">
+    <label for="searchInput">Search Number:</label>
+    <input type="text" id="searchInput">
+    <button onclick="searchNumber()">Search</button>
+    <div id="searchResult"></div>
+  </div>
+  <div class="dropdown-container">
+    <label for="sortedList">Sorted List:</label>
+    <div id="sortedList"></div>
+  </div>
+</body>
+</html>
